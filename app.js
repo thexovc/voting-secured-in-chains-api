@@ -9,14 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "https://patosehibox.com",
-  "https://www.patosehibox.com",
-  "https://patosehi-test.vercel.app",
-  "https://www.patosehi-test.vercel.app",
-];
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
 
 app.use(
   cors({

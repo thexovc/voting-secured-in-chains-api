@@ -184,6 +184,9 @@ async function getAllPositionsInElection(req, res) {
       where: {
         electionId: electionId,
       },
+      include: {
+        candidate: true,
+      },
     });
     res.json(positions);
   } catch (error) {

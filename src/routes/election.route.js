@@ -8,6 +8,7 @@ const {
   getAllElections,
   getAllPositionsInElection,
   getAllCandidatesInPosition,
+  getAllCandidates,
 } = require("../controller/election.controller");
 const getAdmin = require("../middleware/getAdmin");
 const getUser = require("../middleware/getUser");
