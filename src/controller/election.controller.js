@@ -123,8 +123,8 @@ async function vote(req, res) {
       data: {
         user: { connect: { id: userId } },
         position: { connect: { id: positionId } },
-        election: { connect: { id: electionId } },
         candidate: { connect: { id: candidateId } },
+        Election: { connect: { id: electionId } }, // Add this line
       },
     });
 
