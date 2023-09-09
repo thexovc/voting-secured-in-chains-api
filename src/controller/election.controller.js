@@ -3,13 +3,12 @@ const prisma = new PrismaClient();
 
 async function createElection(req, res) {
   try {
-    const { name, startDate, endDate } = req.body;
+    const { name, startDate } = req.body;
 
     const newElection = await prisma.election.create({
       data: {
         name,
         startDate,
-        endDate,
       },
     });
 
@@ -60,6 +59,17 @@ async function addCandidate(req, res) {
   try {
     const { name, email, positionId } = req.body;
     // Check if the position with the given ID exists
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!existingUser) {
+      return res
+        .status(400)
+        .json({ error: "User email does not match any in database." });
+    }
     const existingPosition = await prisma.position.findUnique({
       where: {
         id: positionId,

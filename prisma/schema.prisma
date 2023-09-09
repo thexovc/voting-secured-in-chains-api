@@ -42,10 +42,9 @@ model Candidate {
 
 model Election {
   id        String     @id @default(cuid())
-  name      String
+  name      String     @unique
   positions Position[]
   startDate DateTime
-  endDate   DateTime
   onGoing   Boolean    @default(false)
   ended     Boolean    @default(false)
   votes     Vote[]
