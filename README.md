@@ -42,7 +42,7 @@ Before you begin, ensure you have met the following requirements:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/voting-secured-in-chains.git
+   git clone https://github.com/thexovc/voting-secured-in-chains-api.git
    cd voting-secured-in-chains
    ```
 
