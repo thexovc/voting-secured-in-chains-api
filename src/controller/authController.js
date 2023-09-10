@@ -13,6 +13,9 @@ const register = async (req, res) => {
       password,
       matNo
     );
+
+    await authService.sendEmail(newUser);
+
     res.json(newUser);
   } catch (error) {
     console.error(error);

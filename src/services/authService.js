@@ -1,8 +1,21 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { PrismaClient } = require("@prisma/client");
+const fs = require("fs");
+const ejs = require("ejs");
+const path = require("path");
+const nodemailer = require("nodemailer");
+// const { transporter } = require("../utils/nodemailer");
 
 const prisma = new PrismaClient();
+
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: "kyilaxtech@gmail.com",
+    pass: `${process.env.EMAIL_PASS}`,
+  },
+});
 
 const registerService = async (name, email, password, matNo) => {
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -65,8 +78,39 @@ const updateProfileService = async (userId, updatedData) => {
   return updatedUser;
 };
 
+const sendEmail = async (newUser) => {
+  try {
+    const emailTemplate = fs.readFileSync(
+      path.join(__dirname, "../emails/welcome.ejs"),
+      "utf-8"
+    );
+
+    const mailOptions = {
+      from: "kyilaxtech@gmail.com",
+      to: newUser.email,
+      subject: "Welcome to VSC",
+      html: ejs.render(emailTemplate, {
+        newUser,
+      }),
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+      } else {
+        console.log("Email sent:", info.response);
+      }
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Error sending confirmation email:", error);
+  }
+};
+
 module.exports = {
   registerService,
   loginService,
   updateProfileService,
+  sendEmail,
 };
