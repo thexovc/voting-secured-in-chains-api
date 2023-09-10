@@ -4,8 +4,6 @@ const prisma = new PrismaClient();
 
 const register = async (req, res) => {
   try {
-    // console.log("Body", req.body);
-
     const { email, password, name, matNo } = req.body;
     const newUser = await authService.registerService(
       name,
