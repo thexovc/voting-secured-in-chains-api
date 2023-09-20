@@ -32,6 +32,17 @@ const login = async (req, res) => {
   }
 };
 
+const verifyOtp = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    await authService.verifyOTP(email, otp);
+    return res.status(200).json({ message: "OTP verification successful" });
+  } catch (error) {
+    console.error(error);
+    return res.status(401).json({ error: error.message });
+  }
+};
+
 const updateProfile = async (req, res) => {
   try {
     const { id: userId } = req.params;
@@ -61,4 +72,5 @@ module.exports = {
   login,
   updateProfile,
   getAllUsers,
+  verifyOtp,
 };

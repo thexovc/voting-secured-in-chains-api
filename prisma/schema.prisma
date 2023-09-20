@@ -16,8 +16,12 @@ model User {
   name      String
   matNo     String
   password  String
+  otp       String?
+  manifesto String?
   admin     Boolean  @default(false)
   candidate Boolean  @default(false)
+  validated Boolean  @default(false)
+  confirmed Boolean  @default(false)
   createdAt DateTime @default(now())
   Vote      Vote[]
 }

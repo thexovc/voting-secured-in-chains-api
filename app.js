@@ -33,6 +33,7 @@ app.get("/", async (req, res, next) => {
 
 app.use("/api", require("./src/routes/api.route"));
 app.use("/api/auth", require("./src/routes/auth.route"));
+app.use("/api/admin", require("./src/routes/admin.route"));
 app.use("/api/election", require("./src/routes/election.route"));
 
 app.use((req, res, next) => {
