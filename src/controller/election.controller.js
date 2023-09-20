@@ -57,7 +57,7 @@ async function addPosition(req, res) {
 
 async function addCandidate(req, res) {
   try {
-    const { name, email, positionId } = req.body;
+    const { name, email, positionId, manifesto } = req.body;
     // Check if the position with the given ID exists
     const existingUser = await prisma.user.findUnique({
       where: {
@@ -70,6 +70,7 @@ async function addCandidate(req, res) {
         .status(400)
         .json({ error: "User email does not match any in database." });
     }
+
     const existingPosition = await prisma.position.findUnique({
       where: {
         id: positionId,
@@ -82,6 +83,15 @@ async function addCandidate(req, res) {
         .json({ error: "Position with the provided ID does not exist." });
     }
 
+    await prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        manifesto: manifesto,
+      },
+    });
+
     const newCandidate = await prisma.candidate.create({
       data: {
         name,
@@ -89,6 +99,7 @@ async function addCandidate(req, res) {
         position: {
           connect: { id: positionId },
         },
+        manifesto: manifesto,
       },
     });
     res.json(newCandidate);

@@ -62,6 +62,7 @@ const loginService = async (email, password) => {
       matNo: user.matNo,
       admin: user.admin,
       candidate: user.candidate,
+      manifesto: user.manifesto,
     },
     "super-secretdydgds",
     {
@@ -77,6 +78,7 @@ const loginService = async (email, password) => {
       matNo: user.matNo,
       admin: user.admin,
       candidate: user.candidate,
+      manifesto: user.manifesto,
     },
   };
 };

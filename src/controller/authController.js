@@ -35,8 +35,18 @@ const login = async (req, res) => {
 const verifyOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
-    await authService.verifyOTP(email, otp);
-    return res.status(200).json({ message: "OTP verification successful" });
+
+    const user = await prisma.user.findUnique({ where: { email: email } });
+
+    if (otp == user.otp) {
+      await prisma.user.update({
+        where: { email: email },
+        data: { confirmed: true },
+      });
+      return res.status(200).json({ message: "OTP verification successful" });
+    }
+
+    return res.status(401).json({ error: "Otp does not match" });
   } catch (error) {
     console.error(error);
     return res.status(401).json({ error: error.message });
