@@ -2,6 +2,8 @@ const express = require("express");
 const {
   validateUserById,
   getAllUsers,
+  unvalidateUser,
+  getAllValidatedUser,
 } = require("../controller/admin.controller");
 
 const router = express.Router();
@@ -19,5 +21,7 @@ function isAdmin(req, res, next) {
 
 router.post("/getAllUsers", getAllUsers);
 router.post("/validateUser/:id", validateUserById);
+router.get("/validated-users", getAllValidatedUser);
+router.post("/unvalidate-user/:userId", unvalidateUser);
 
 module.exports = router;

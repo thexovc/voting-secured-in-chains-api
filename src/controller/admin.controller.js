@@ -42,7 +42,40 @@ const validateUserById = async (req, res) => {
   }
 };
 
+const getAllValidatedUser = async (req, res) => {
+  try {
+    const validatedUsers = await prisma.user.findMany({
+      where: {
+        validated: true,
+      },
+    });
+    res.json(validatedUsers);
+  } catch (error) {
+    console.error("Error fetching validated users:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const unvalidateUser = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        validated: false,
+      },
+    });
+    res.json(updatedUser);
+  } catch (error) {
+    console.error(`Error unvalidating user with ID ${userId}:`, error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getAllUsers,
   validateUserById,
+  getAllValidatedUser,
+  unvalidateUser,
 };
